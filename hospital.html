@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment inquiry</title>
+    <link rel="stylesheet" href="./css/hospital.css">
+</head>
+ 
+<body>
+
+    <h1 align="center">Appointment inquiry</h1>
+    <h3 id="time" align="center"></h3>
+    <div>
+        <br>
+        <p class="tip" align="center">Tips:Time can only be on the hour and half hour,like 9.00 and 19.30!</p><br>
+        <form method="get" action="./hospital.html">
+            <p align="center">Name:<input type="text" id="name" /></p>
+            <p align="center">Date:<input type="text" id="date" /></p>
+            <p align="center">Time:<input type="text" id="time1" /></p>
+            <p align="center">Department:<input type="text" id="department" /></p>
+        </form>
+        <p align="center"><input type="submit" value="submit" onclick="addData()" /></p>
+        <p align="center"><input type="submit" value="back" onclick="location.href='index.html'" /></p>
+    </div>
+    <form action="" method="post" name="indexf">
+        <table align="center" border="1px" cellspacing="0px" width="800px">
+            <tbody id="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Data</th>
+                    <th>Time</th>
+                    <th>Department</th>
+                </tr>
+            </tbody>
+        </table>
+
+    </form>
+</body>
+
+<script>
+    var data = [{
+        name: "zhouyang",
+        date: "2023.12.7",
+        time: "9:00",
+        department: "Internal Medicine"
+    }];
+     //加载完后做的第一件事
+    window.onload = e => {
+        loadData();
+        setInterval(() => timer(), 1000)
+    };
+     //更新当前时间
+    function timer(){
+        let element = document.getElementById('time');
+        element.innerText = getCurrentTime();
+    }
+    //循环获取当前时间
+    function getCurrentTime() {
+        let myDate = new Date();
+        let year = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+        let month = myDate.getMonth() + 1;  //获取当前月份(0-11,0代表1月)
+        let day = myDate.getDate();  //获取当前日(1-31)
+        let hour = myDate.getHours();  //获取当前小时数(0-23)
+        let minute = myDate.getMinutes();  //获取当前分钟数(0-59)
+        let second = myDate.getSeconds();  //获取当前秒数(0-59)
+        return`${year}-${month}-${day} ${hour}:${minute}:${second}`;
+    }
+    //加载多个预约数据
+    function loadData() {
+        for (let i = 0; i < data.length; i++) {
+            addDataHtml(data[i]);
+        }
+    }
+    //存储填的预约表单
+    function addData() {
+        let timeText = document.getElementById('time').innerText;
+        let dateText = document.getElementById('date').value;
+        
+        if(new Date(dateText) < new Date(timeText)){
+            alert("Please enter the correct appointment time!")
+            return;
+        }
+
+        debugger;
+
+        let data1 = {
+            name: document.getElementById('name').value,
+            date: document.getElementById('date').value,
+            time: document.getElementById('time1').value,
+            department: document.getElementById('department').value
+        };
+        data.push(data1);
+        addDataHtml(data1);
+    }
+    //加载填的预约表单
+    function addDataHtml(element) {
+        let table = document.getElementById('table');
+        let datarow = `<tr><th>${element.name}</th><th>${element.date}</th><th>${element.time}</th><th>${element.department}</th></tr>`;
+        table.insertAdjacentHTML("beforeend", datarow);
+    }
+</script>
+
+</html>

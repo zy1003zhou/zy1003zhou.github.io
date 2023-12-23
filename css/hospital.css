@@ -1,0 +1,12 @@
+body {
+    background:url("../images/background.jpg") no-repeat 0px 0px;
+}
+
+h1{
+    font-size: 100px;
+    color: #9d2933;
+}
+
+.tip{
+    color: #177cb0;
+}
